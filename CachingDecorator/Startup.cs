@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
 
 namespace CachingDecorator
 {
@@ -40,7 +39,13 @@ namespace CachingDecorator
             });
             services.AddScoped<ICarRepository, CarRepository>();
 
-            EnableDecoratorHandsOn(services);
+            EnableDecorator(services);
+            //EnableDecoratorHandsOn(services);
+        }
+
+        private void EnableDecorator(IServiceCollection services)
+        {
+            services.Decorate<ICarRepository, CarCachingDecorator>();
         }
 
         private void EnableDecoratorHandsOn(IServiceCollection services)
